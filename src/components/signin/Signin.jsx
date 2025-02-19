@@ -1,5 +1,6 @@
 import "./Signin.css";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import infinityLoader from "../../assets/infinityLoader.gif";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../constants/firebase";
@@ -21,6 +22,7 @@ const Signin = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("user logged in successfully");
+      window.location.href = "/account";
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +91,7 @@ const Signin = () => {
         )}
         <p className="signup-link">
           Already a Member?&nbsp;&nbsp;
-          {/* <Link to={"/auth/signin"}>Sign In</Link> */}
+          <Link to={"/signup"}>Sign Up</Link>
         </p>
       </form>
     </div>

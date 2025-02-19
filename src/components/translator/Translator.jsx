@@ -9,16 +9,15 @@ import { FaRegStopCircle } from "react-icons/fa";
 import { SiGoogletranslate } from "react-icons/si";
 
 function Translator() {
-  const [fromText, setFromText] = useState("");
+  // const [fromText, setFromText] = useState("");
+  const [transcript, setTranscript] = useState("");
   const [toText, setToText] = useState("");
   const [fromLanguage, setFromLanguage] = useState("en-GB");
   const [toLanguage, setToLanguage] = useState("hi-IN");
   const [languages, setLanguages] = useState({});
   const [loading, setLoading] = useState(false);
-  // const [transcript, setTranscript] = useState("i love you gaurav");
-  const [transcript, setTranscript] = useState("");
   const [isListening, setIsListening] = useState(false);
-  const recognitionRef = useRef(null); // Store recognition instance
+  const recognitionRef = useRef(null);
 
   useEffect(() => {
     setLanguages(lang);
@@ -115,18 +114,18 @@ function Translator() {
 
   return (
     <div id="translator">
-      <div className="title">Speech-to-Speech Language Translator</div>
+      <div className="title mt-[-20px]">Speech-to-Speech Language Translator</div>
       <div className="container">
         <div className="wrapper" id="translator-wrapper">
           <div className="text-input">
             <textarea
-              className="from-text"
+              className="from-text bg-white text-[16px] text-black"
               placeholder="Start Listening to record speech..."
               value={transcript}
               onChange={(e) => setFromText(e.target.value)}
             ></textarea>
             <textarea
-              className="to-text"
+              className="to-text bg-white font-[16px] text-black"
               value={toText}
               placeholder="Translated text..."
               readOnly
@@ -157,7 +156,7 @@ function Translator() {
               </select>
             </li>
 
-            <FaExchangeAlt onClick={handleExchange}/>
+            <FaExchangeAlt onClick={handleExchange} />
 
             <li className="row to">
               <select

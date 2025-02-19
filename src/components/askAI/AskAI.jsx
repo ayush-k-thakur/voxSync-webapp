@@ -108,8 +108,12 @@ function Translator() {
   };
 
   const handleReset = () => {
+    console.log(transcript, toText);
     setTranscript("");
     setToText("");
+
+    console.log("Resetting...");
+    console.log(transcript, toText);
   };
 
   const translateText = async (text, sourceLang, targetLang, process) => {
@@ -131,21 +135,21 @@ function Translator() {
   };
 
   const translateAiResponse = async (text, sourceLang, targetLang, process) => {
-    if (process === "user" && sourceLang === "en-GB") return text;
-    // let url = `https://api.mymemory.translated.net/get?q=${text}&langpair=${sourceLang}|${targetLang}`;
-    // const res = await fetch(url);
-    // const data = await res.json();
-    // return data.responseData.translatedText;
-    try {
-      const result = await langModel.generateContent(
-        `Translate the following text from ${sourceLang} to ${targetLang}: ${text}. Send just the translated text.`
-      );
-      const response = result.response.text();
-      return response;
-    } catch (error) {
-      console.error("Error fetching AI response:", error);
-      return "Translating the answer in your lan";
-    }
+    if (targetLang === "en-GB" && sourceLang === "en-GB") return text;
+    let url = `https://api.mymemory.translated.net/get?q=${text}&langpair=${sourceLang}|${targetLang}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.responseData.translatedText;
+    // try {
+    //   const result = await langModel.generateContent(
+    //     `Translate the following text from ${sourceLang} to ${targetLang}: ${text}. Send just the translated text.`
+    //   );
+    //   const response = result.response.text();
+    //   return response;
+    // } catch (error) {
+    //   console.error("Error fetching AI response:", error);
+    //   return "Translating the answer in your lan";
+    // }
   };
 
   const askGeminiAI = async (text) => {
@@ -153,7 +157,7 @@ function Translator() {
       const result = await model.generateContent(
         `I am a child and I want to now ${transcript}, can you explain it to me in short? If yes, then please send me the answer in simple words in less than 100 words.`
       );
-      const response = await result.response.text();
+      const response = result.response.text();
       return response;
     } catch (error) {
       console.error("Error fetching AI response:", error);
@@ -211,13 +215,13 @@ function Translator() {
         <div className="wrapper" id="translator-wrapper">
           <div className="text-input">
             <textarea
-              className="from-text"
+              className="from-text bg-white font-[16px] text-black"
               placeholder="Start Listening to record speech..."
               value={transcript}
               onChange={(e) => setFromText(e.target.value)}
             ></textarea>
             <textarea
-              className="to-text"
+              className="to-text bg-white font-[16px] text-black"
               value={toText}
               placeholder="Translated text..."
               readOnly
@@ -248,8 +252,8 @@ function Translator() {
               </select>
             </li>
 
-            <div className="clear">
-              <FaEraser onClick={handleReset} />
+            <div className="clear" onClick={handleReset}>
+              <FaEraser />
               Clear
             </div>
 

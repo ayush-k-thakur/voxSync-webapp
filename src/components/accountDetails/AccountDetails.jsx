@@ -22,6 +22,7 @@ function AccountDetails() {
     try {
       await auth.signOut();
       console.log("user logged out successfully");
+      window.location.href = "/";
     } catch (error) {
       console.log(error);
     }

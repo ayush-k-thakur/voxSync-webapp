@@ -16,7 +16,7 @@
 
 .title {
   position: absolute;
-  top: 100px;
+  top: 90px;
   color: #414141;
   font-size: 24px;
   font-family: cursive;
@@ -56,7 +56,7 @@ textarea {
   border-radius: 10px;
   resize: none;
   padding: 10px;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 textarea::placeholder {
