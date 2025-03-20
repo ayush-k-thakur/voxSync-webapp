@@ -3,16 +3,16 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCyEd0k9risb_SBEBWZmcbwvIsZd7sHRHk",
-  authDomain: "lingo-499f3.firebaseapp.com",
-  projectId: "lingo-499f3",
-  storageBucket: "lingo-499f3.firebasestorage.app",
-  messagingSenderId: "771339463457",
-  appId: "1:771339463457:web:3203d07ffacc87b8d46c60",
-  measurementId: "G-BCJPMVMY2G",
+  apiKey: "AIzaSyBIt7JXKv2L2Yk8E-Ze-TZz_Fl2BmlFWgM",
+  authDomain: "voxsync-8d0c4.firebaseapp.com",
+  projectId: "voxsync-8d0c4",
+  storageBucket: "voxsync-8d0c4.firebasestorage.app",
+  messagingSenderId: "390366119534",
+  appId: "1:390366119534:web:b2e94033b0f8156bba887f",
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+
+export const auth = getAuth();
 export const db = getFirestore(app);
 export default app;

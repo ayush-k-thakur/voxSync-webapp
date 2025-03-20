@@ -16,11 +16,10 @@ function Translator() {
   const [toLanguage, setToLanguage] = useState("hi-IN");
   const [languages, setLanguages] = useState({});
   const [loading, setLoading] = useState(false);
-  // const [transcript, setTranscript] = useState("i love you gaurav");
   const [transcript, setTranscript] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [question, setQuestion] = useState("");
-  const recognitionRef = useRef(null); // Store recognition instance
+  const recognitionRef = useRef(null);
 
   const genAI = new GoogleGenerativeAI(
     "AIzaSyC6ncFH1QtAmEZ3RO3UzeapMaorV0LJeUw" //gaurav

@@ -1,7 +1,11 @@
-import React from "react";
+import React from 'react'
 
-const VideoConference = () => {
-  return <div className="mt-[200px] ml-[47%] text-white">VideoConference</div>;
-};
+function VideoConference() {
+  return (
+    <div className='top-[250px] text-white'>
+      Video Conferencing
+    </div>
+  )
+}
 
-export default VideoConference;
+export default VideoConference

@@ -36,20 +36,8 @@ const Signup = () => {
     }
 
     try {
-      // const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      // const user = userCredential.user;
-      // await setDoc(doc(db, "Users", user.uid), { email: user.email, name });
-
-      // Cookies.set("token", user.accessToken, { expires: 7 });
-      // localStorage.setItem("user", JSON.stringify({ email: user.email, uid: user.uid }));
-
-      // Redirect to another page
-      // window.location.href = "/create-trip";
-
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      console.log(user);
-      console.log("user registered successfully");
       if (user) {
         await setDoc(doc(db, "Users", user.uid), { email: user.email, name });
         Cookies.set("token", user.accessToken, { expires: 7 });
@@ -57,7 +45,7 @@ const Signup = () => {
           "user",
           JSON.stringify({ email: user.email, uid: user.uid })
         );
-        // window.location.href = "/create-trip";
+        window.location.href = "/";
       }
     } catch (error) {
       toast.error(error.message);

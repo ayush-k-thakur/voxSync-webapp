@@ -4,29 +4,45 @@ import { Link } from "react-router-dom";
 import infinityLoader from "../../assets/infinityLoader.gif";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../constants/firebase";
+import Cookies from "js-cookie";
 
 const Signin = () => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleInputChange = (name, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(""); // Reset error before a new attempt
     const { email, password } = formData;
+
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log("user logged in successfully");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user; // Get user object from response
+
+      console.log("User logged in successfully");
+      Cookies.set("token", user.accessToken, { expires: 7 });
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ email: user.email, uid: user.uid })
+      );
       window.location.href = "/account";
     } catch (error) {
-      console.log(error);
+      setError(error.message); // Store error for display
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div className="form-box">
       <form className="form" onSubmit={handleSubmit}>
@@ -36,61 +52,40 @@ const Signin = () => {
           <input
             placeholder="Enter email"
             type="email"
-            onChange={(e) => handleInputChange("email", e.target.value)}
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
           />
-          <span>
-            <svg
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http:www.w3.org/2000/svg"
-            >
-              <path
-                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                strokeWidth={2}
-                strokeLinejoin="round"
-                strokeLinecap="round"
-              />
-            </svg>
-          </span>
         </div>
+
         <div className="input-container">
           <input
             placeholder="Enter password"
             type="password"
-            onChange={(e) => handleInputChange("password", e.target.value)}
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            required
           />
-          <span>
-            <svg
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http:www.w3.org/2000/svg"
-            >
-              <path
-                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                strokeWidth={2}
-                strokeLinejoin="round"
-                strokeLinecap="round"
-              />
-              <path
-                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                strokeWidth={2}
-                strokeLinejoin="round"
-                strokeLinecap="round"
-              />
-            </svg>
-          </span>
         </div>
+
+        {error && <p className="error-message">{error}</p>}
+
         {!loading ? (
-          <button className="submit" type="submit" onClick={handleSubmit}>
+          <button className="submit" type="submit">
             Sign In
           </button>
         ) : (
-          <img src={infinityLoader} className="scale-75 m-auto" alt="" />
+          <img
+            src={infinityLoader}
+            className="scale-75 m-auto"
+            alt="Loading..."
+          />
         )}
+
         <p className="signup-link">
-          Already a Member?&nbsp;&nbsp;
+          Not a Member?&nbsp;&nbsp;
           <Link to={"/signup"}>Sign Up</Link>
         </p>
       </form>

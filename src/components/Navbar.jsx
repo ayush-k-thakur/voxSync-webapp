@@ -5,67 +5,53 @@ import logo from "../assets/logo-transparent.png";
 import { useSonner } from "sonner";
 import userImg from "../assets/userImg.png";
 
-const Navbar = () => {
+const Navbar = ({user}) => {
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
   useEffect(() => {
-    setLoading(true);
-    setUser(JSON.parse(localStorage.getItem("user")));
-    setLoading(false);
+    console.log(user);
   }, []);
   return (
     <div className="fixed top-0 left-0 right-0 bg-slate-200 h-[50px] shadow-lg flex justify-between items-center px-5">
-      <Link to={"/"}>
-        <div className="font-semibold text-[#f56551] flex justify-between items-center gap-[10px]">
-          <img src={logo} alt="" className="h-[25px]" />
-          <div>
-            <span className="hidden sm:inline text-[#FF851B]">Vox</span>
-            <span className="text-[#3D9970]">Sync</span>
+      <div className="flex gap-20 lg:gap-28 ">
+        <Link to={"/"}>
+          <div className="font-semibold text-[#f56551] flex justify-between items-center gap-[10px] mt-2">
+            <img src={logo} alt="" className="h-[25px]" />
+            <div>
+              <span className="hidden sm:inline text-[#FF851B]">Vox</span>
+              <span className="text-[#3D9970]">Sync</span>
+            </div>
           </div>
+        </Link>
+        <div className="hidden md:flex mt-1">
+          <Link
+            to={"/translator"}
+            className="relative px-4 py-2 text-gray-600 transition-all duration-300 hover:text-blue-600 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[0.1rem] after:bg-blue-500 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
+          >
+            Translator
+          </Link>
+          <Link
+            to={"/ask-ai"}
+            className="relative px-4 py-2 text-gray-600 transition-all duration-300 hover:text-purple-600 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[0.1rem] after:bg-purple-500 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
+          >
+            ASK AI
+          </Link>
+          <Link
+            to={"/meeting-minutes"}
+            className="relative px-4 py-2 text-gray-600 transition-all duration-300 hover:text-green-600 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[0.1rem] after:bg-green-500 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
+          >
+            Generate MoM
+          </Link>
+          <Link
+            to={"/video-conference"}
+            className="relative px-4 py-2 text-gray-600 transition-all duration-300 hover:text-red-600 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[0.1rem] after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
+          >
+            Video Conferencing
+          </Link>
         </div>
-      </Link>
+      </div>
       <div>
         {user ? (
           <div className="flex gap-5">
-            {/* <Link to="/create-trip">
-              <div
-                className="border-2 flex flex-row"
-                style={{
-                  border: "1px solid black",
-                  padding: "0px",
-                  borderRadius: "10px",
-                  height: "30px",
-                  alignItems: "center",
-                }}
-              >
-                <button
-                  className="bg-inherit rounded-md text-black hover:bg-slate-200"
-                  style={{ height: "20px" }}
-                >
-                  Create Trip
-                </button>
-              </div>
-            </Link>
-            <Link to="/my-trips">
-              <div
-                className="border-2 flex flex-row"
-                style={{
-                  border: "1px solid black",
-                  padding: "0px",
-                  borderRadius: "10px",
-                  height: "30px",
-                  alignItems: "center",
-                }}
-              >
-                <button
-                  className="bg-inherit rounded-md text-black hover:bg-slate-200"
-                  style={{ height: "20px" }}
-                >
-                  My Trips
-                </button>
-              </div>
-            </Link> */}
-
             {!loading ? (
               <Link to={"/account"}>
                 <img src={userImg} className="h-[30px]" />
